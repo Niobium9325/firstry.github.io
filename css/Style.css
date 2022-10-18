@@ -1,9 +1,8 @@
-.flex-row{
-    display:flex;
-    flex-direction:row;
-    flex-wrap:wrap;
+.body_bg {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(45deg,rgb(255, 161, 239),rgb(170, 234, 253));
 }
-
-.nav.nav-menu{
-    justify-content:space-between;
+.fnt{
+    font-family:cursive;
 }
