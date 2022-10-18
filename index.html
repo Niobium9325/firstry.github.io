@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/Style.css">
+    <!-- <link rel="stylesheet" href="./css/Style.css"> -->
+    <style>
+        .body_bg {
+            height: 100vh;
+            width: 100%;
+            background-image: url(./css/teddy_bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .fnt{
+            font-family:cursive;
+        }
+    </style>
 </head>
 <body class="body_bg">
     <div class="fnt">
         <p>
             <fieldset>
-                <legend>Dear Diary</legend>
+                <legend>Pick your date</legend>
                 <label for="my_dates">Date:
                     <input type="date" id="my_dates">
                 </label>
