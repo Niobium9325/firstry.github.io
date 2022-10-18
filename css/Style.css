@@ -1,5 +1,5 @@
 .body_bg {
-    height: 100%;
+    height: 100vh;
     width: 100%;
     background-image: url(./teddy_bg.jpg);
     background-size: cover;
