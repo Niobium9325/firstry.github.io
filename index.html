@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="./css/Style.css"> -->
+    <title>Dear diary</title>
     <style>
         * {
             margin:0;
@@ -31,6 +30,11 @@
         .wrapper fieldset{
             text-align: center;
             height: 60px;
+            -webkit-text-fill-color:black;
+            font: bold;
+        }
+        .dt_picker{
+            background: linear-gradient(135deg,rgb(170, 234, 253),rgb(255, 143, 78));
         }
         .wrapper h2{
             text-align: center;
@@ -47,7 +51,9 @@
             border-color:aliceblue;
             margin-top: 20px;
             max-height: 200px;
-            background:url(./css/paper_bg.jpg);
+            fill-opacity:initial;
+            background: url(./css/images\ \(1\).jpeg);
+            font-weight: bolder;
         }
         textarea:is(:focus, :valid){
             border-width: 2px;
@@ -64,6 +70,11 @@
             text-align: center;
             font-size: 15px;
         }
+        button{
+            background: linear-gradient(135deg,rgb(170, 234, 253),rgb(255, 143, 78));
+            border-radius: 5px;
+
+        }
     </style>
 </head>
 <body>
@@ -71,28 +82,85 @@
         <p>
             <fieldset>
                 <legend>Pick your date</legend>
-                <label for="my_dates">Date:
-                    <input type="date" id="my_dates">
+                <label for="dt">Date:
+                    <input type="date" id="dt" class="dt_picker">
+                    <button id="st">SET</button>
                 </label>
             </fieldset>
             
         </p>
-        <textarea placeholder="Type somthin'" id="txt" cols="30" rows="10"></textarea>
+        <textarea placeholder="Type somthin'" id="msg" cols="30" rows="10"></textarea>
         <div class="ent">
-            <input type="submit" value="SAVE">
+            <button id="sv">SAVE</button>
         </div>
     </div>
     <script>
-        var date_dict = {};
-        function date_adder(){
-            
-        }
         const textarea = document.querySelector("textarea");
         textarea.addEventListener("keyup", e =>{
             textarea.style.height = "50px";
             let scHeight = e.target.scrollHeight;
             textarea.style.height = `${scHeight}px`;
         })
+    </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUwE-ieXxKrTHaH-49RY_2H_EdI818chA",
+            authDomain: "fir-exactly.firebaseapp.com",
+            databaseURL: "https://fir-exactly-default-rtdb.firebaseio.com",
+            projectId: "fir-exactly",
+            storageBucket: "fir-exactly.appspot.com",
+            messagingSenderId: "155846888009",
+            appId: "1:155846888009:web:d6595f820636a27d304d98"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+
+        import {getDatabase, ref, get, set, child, update, remove}
+        from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+        const db = getDatabase();
+        // inputs
+        var dtbox = document.getElementById("dt");
+        var msgbox = document.getElementById("msg");
+        // buttons
+        var setBtn = document.getElementById("st");
+        var saveBtn = document.getElementById("sv");
+
+        // save func
+        function saveFunc(){
+            set(ref(db, "diaryEntries/"+dtbox.value),{
+                date: dtbox.value,
+                message: msgbox.value
+            })
+            .then(()=>{
+                alert("Entry saved...");
+            })
+        }
+        // set func
+        function setFunc(){
+            const dbref = ref(db);
+            get(child(dbref,"diaryEntries/"+dtbox.value)).then((snapshot)=>{
+                if(snapshot.exists()){
+                    msgbox.value = snapshot.val().message;
+                }
+                else{
+                    msgbox.value = "";
+                    // alert("no data...");
+                }
+            });
+        }
+        // assign func to buttons
+        setBtn.addEventListener('click', setFunc);
+        saveBtn.addEventListener('click', saveFunc);
+
     </script>
 </body>
 </html>
